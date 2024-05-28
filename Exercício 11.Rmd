@@ -1,0 +1,83 @@
+---
+title: "Entendendo os estudantes."
+author: "Erico andre da Silva"
+date: "`r Sys.Date()`"
+output: html_document
+bibliography: "students-performance-dataset.bib"
+---
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# install.packages('knitr')
+# install.packages("ggplot2") 
+# install.packages("dplyr")
+library(dplyr)
+library(ggplot2)
+```
+
+Os dados utilizado nesse script foram baixados do kaggle @students-performance-dataset 
+
+```{r echo=FALSE, warning=TRUE }
+df <- read.csv('StudentsPerformance.csv')
+
+df$Score <- round((df$reading.score + df$math.score + df$writing.score) / 3, 0)
+
+head(df)
+```
+
+Qual a nota média de matemática dos alunos segundo o grau de escolaridade dos pais?
+
+```{r}
+# Contar os valores únicos da coluna 'parental level of education'
+value_counts <- table(df$parental.level.of.education)
+value_counts
+```
+
+3. verificação da quantidade de alunos em cada grupo racial/étnico.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+value_counts <- table(df$race.ethnicity)
+value_counts
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Criar o gráfico de barras
+ggplot(df, aes(x = race.ethnicity)) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Contagem de Race/Ethnicity", x = "Race/Ethnicity", y = "Contagem") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+4. Qual a quantidade de alunos de cada gênero? Existem mais alunos do gênero masculino ou feminino?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(df, aes(x = gender)) + geom_bar() +labs(title = "Contagem de Gêneros", x = "Gênero", y = "Contagem")
+```
+
+# Referencias
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
